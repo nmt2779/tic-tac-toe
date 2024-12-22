@@ -1,9 +1,13 @@
 export default function Square({
   value,
-  onClick,
+  onSquareClick,
 }: {
-  value: number;
-  onClick: () => void;
+  value: string;
+  onSquareClick: () => void;
 }) {
-  return <button className="">{value}</button>;
+  return (
+    <button className="border text-center w-10 h-10" onClick={onSquareClick}>
+      {value}
+    </button>
+  );
 }
