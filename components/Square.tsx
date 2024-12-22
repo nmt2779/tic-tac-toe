@@ -6,7 +6,10 @@ export default function Square({
   onSquareClick: () => void;
 }) {
   return (
-    <button className="border text-center w-10 h-10" onClick={onSquareClick}>
+    <button
+      className="text-2xl border border-gray-700 text-center w-16 h-16 mr-[-1px] mt-[-1px]"
+      onClick={onSquareClick}
+    >
       {value}
     </button>
   );

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Board from "./Board";
+import { Button } from "./ui/button";
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -22,18 +23,20 @@ export default function Game() {
     const desc = move ? `Go to move #${move}` : "Go to game start";
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
+        <Button variant={"outline"} onClick={() => jumpTo(move)}>
+          {desc}
+        </Button>
       </li>
     );
   });
 
   return (
-    <div className="flex">
-      <div className="game-board">
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col items-center">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="ml-20">
-        <ol>{moves}</ol>
+      <div>
+        <ol className="grid grid-rows-5 grid-flow-col gap-2">{moves}</ol>
       </div>
     </div>
   );
