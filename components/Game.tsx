@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Board from "./Board";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -31,7 +32,11 @@ export default function Game() {
         {move === currentMove ? (
           "You are at move #" + move
         ) : (
-          <Button variant={"outline"} onClick={() => jumpTo(move)}>
+          <Button
+            className={cn(move === 0 ? "font-semibold" : "")}
+            variant={"outline"}
+            onClick={() => jumpTo(move)}
+          >
             {desc}
           </Button>
         )}
@@ -40,11 +45,11 @@ export default function Game() {
   });
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col items-center">
+    <div className="w-full max-w-[600px] flex flex-col sm:flex-row justify-center gap-10 ">
+      <div className="flex flex-col items-center p-4">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div>
+      <div className=" p-4 grow">
         <ol className="grid grid-rows-5 grid-flow-col gap-2">
           {movesAscending ? moves : moves.reverse()}
         </ol>
