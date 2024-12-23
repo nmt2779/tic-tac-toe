@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState<number>(0);
+  const [movesAscending, setMovesAscending] = useState<boolean>(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -17,6 +18,10 @@ export default function Game() {
 
   function jumpTo(nextMove: number) {
     setCurrentMove(nextMove);
+  }
+
+  function toggleMovesOrder() {
+    setMovesAscending(!movesAscending);
   }
 
   const moves = history.map((squares, move) => {
@@ -40,7 +45,12 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div>
-        <ol className="grid grid-rows-5 grid-flow-col gap-2">{moves}</ol>
+        <ol className="grid grid-rows-5 grid-flow-col gap-2">
+          {movesAscending ? moves : moves.reverse()}
+        </ol>
+        <Button onClick={toggleMovesOrder} className="mt-2 w-full">
+          Sort by {movesAscending ? "Descending" : "Ascending"}
+        </Button>
       </div>
     </div>
   );
