@@ -42,7 +42,7 @@ export default function Game() {
           </div>
         ) : (
           <Button
-            className={cn(index === 0 ? "font-semibold" : "")}
+            className={cn(index === 0 ? "font-semibold" : "", "w-full")}
             variant={"outline"}
             onClick={() => jumpTo(index)}
           >
@@ -55,17 +55,17 @@ export default function Game() {
 
   return (
     <div
-      className="w-full max-w-[600px] flex flex-col sm:flex-row
-     justify-center border shadow-md rounded-lg "
+      className="w-full max-w-[700px] flex flex-col sm:flex-row
+     justify-center sm:justify-between border shadow-md rounded-lg"
     >
-      <div className="flex flex-col items-center justify-center p-4 ">
+      <div className="flex flex-col items-center justify-center p-6 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="p-4 grow">
-        <ol className="grid grid-rows-5 grid-flow-col gap-4">
+      <div className="p-6 grow">
+        <ol className="w-full grid grid-rows-5 grid-cols-2 grid-flow-col gap-x-8 gap-y-4">
           {movesAscending ? moves : moves.reverse()}
         </ol>
-        <Button onClick={toggleMovesOrder} className="mt-2 w-full">
+        <Button onClick={toggleMovesOrder} className="mt-10 sm:mt-6 w-full">
           Sort by {movesAscending ? "Descending" : "Ascending"}
         </Button>
       </div>
