@@ -23,9 +23,13 @@ export default function Game() {
     const desc = move ? `Go to move #${move}` : "Go to game start";
     return (
       <li key={move}>
-        <Button variant={"outline"} onClick={() => jumpTo(move)}>
-          {desc}
-        </Button>
+        {move === currentMove ? (
+          "You are at move #" + move
+        ) : (
+          <Button variant={"outline"} onClick={() => jumpTo(move)}>
+            {desc}
+          </Button>
+        )}
       </li>
     );
   });
