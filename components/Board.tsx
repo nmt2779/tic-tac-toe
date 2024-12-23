@@ -1,5 +1,6 @@
 import calculateWinner from "@/lib/calculate-winner";
 import Square from "./Square";
+import { cn } from "@/lib/utils";
 
 export default function Board({
   xIsNext,
@@ -24,10 +25,10 @@ export default function Board({
     onPlay(nextSquares);
   };
 
-  const winner = calculateWinner(squares);
+  const result = calculateWinner(squares);
   let status;
-  if (winner) {
-    status = "Winner: " + winner;
+  if (result) {
+    status = "Winner: " + result.winner;
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -49,6 +50,7 @@ export default function Board({
                       key={index}
                       value={squares[index]}
                       onSquareClick={() => handleClick(index)}
+                      isWinningSquare={result?.line.includes(index)}
                     />
                   );
                 })}
