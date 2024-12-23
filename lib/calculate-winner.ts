@@ -1,4 +1,6 @@
 export default function calculateWinner(squares: string[]){
+  if(!squares) return null;
+
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

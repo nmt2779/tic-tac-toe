@@ -1,6 +1,6 @@
 import calculateWinner from "@/lib/calculate-winner";
 import Square from "./Square";
-import { cn } from "@/lib/utils";
+import { Move } from "@/types/Move";
 
 export default function Board({
   xIsNext,
@@ -9,9 +9,11 @@ export default function Board({
 }: {
   xIsNext: boolean;
   squares: string[];
-  onPlay: (nextSquares: string[]) => void;
+  onPlay: (move: Move) => void;
 }) {
-  const handleClick = (i: number) => {
+  const handleClick = ({ row, col }: { row: number; col: number }) => {
+    const i = row * 3 + col;
+
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
@@ -22,7 +24,7 @@ export default function Board({
       nextSquares[i] = "O";
     }
 
-    onPlay(nextSquares);
+    onPlay({ squares: nextSquares, coordinates: { row, col } });
   };
 
   const result = calculateWinner(squares);
@@ -48,8 +50,8 @@ export default function Board({
                   return (
                     <Square
                       key={index}
-                      value={squares[index]}
-                      onSquareClick={() => handleClick(index)}
+                      value={squares ? squares[index] : ""}
+                      onSquareClick={() => handleClick({ row: row, col: col })}
                       isWinningSquare={result?.line.includes(index)}
                     />
                   );

@@ -4,16 +4,19 @@ import Board from "./Board";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { MapPinIcon } from "lucide-react";
+import { Move } from "@/types/Move";
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [history, setHistory] = useState<Move[]>([
+    { squares: Array(9).fill(null), coordinates: { row: 0, col: 0 } },
+  ]);
   const [currentMove, setCurrentMove] = useState<number>(0);
   const [movesAscending, setMovesAscending] = useState<boolean>(true);
   const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const currentSquares = history[currentMove].squares;
 
-  function handlePlay(nextSquares: string[]) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(move: Move) {
+    const nextHistory = [...history.slice(0, currentMove + 1), move];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -26,19 +29,22 @@ export default function Game() {
     setMovesAscending(!movesAscending);
   }
 
-  const moves = history.map((squares, move) => {
-    const desc = move ? `Go to move #${move}` : "Go to game start";
+  const moves = history.map((move, index) => {
+    const desc = index
+      ? `Go to move #${index} (${move.coordinates.row}, ${move.coordinates.col})`
+      : `Go to game start`;
     return (
-      <li key={move}>
-        {move === currentMove ? (
+      <li key={index}>
+        {index === currentMove && index !== 0 ? (
           <div className="flex gap-2 items-center">
-            <MapPinIcon className="w-4 h-4" /> #{move}
+            <MapPinIcon className="w-4 h-4" />({move.coordinates.row},{" "}
+            {move.coordinates.col})
           </div>
         ) : (
           <Button
-            className={cn(move === 0 ? "font-semibold" : "")}
+            className={cn(index === 0 ? "font-semibold" : "")}
             variant={"outline"}
-            onClick={() => jumpTo(move)}
+            onClick={() => jumpTo(index)}
           >
             {desc}
           </Button>
@@ -48,12 +54,15 @@ export default function Game() {
   });
 
   return (
-    <div className="w-full max-w-[600px] flex flex-col sm:flex-row justify-center gap-10 border shadow-md rounded-lg divide-y sm:divide-x">
-      <div className="flex flex-col items-center p-4">
+    <div
+      className="w-full max-w-[600px] flex flex-col sm:flex-row
+     justify-center border shadow-md rounded-lg "
+    >
+      <div className="flex flex-col items-center justify-center p-4 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="p-4 grow">
-        <ol className="grid grid-rows-5 grid-flow-col gap-2">
+        <ol className="grid grid-rows-5 grid-flow-col gap-4">
           {movesAscending ? moves : moves.reverse()}
         </ol>
         <Button onClick={toggleMovesOrder} className="mt-2 w-full">
