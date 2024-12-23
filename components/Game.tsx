@@ -3,6 +3,7 @@ import { useState } from "react";
 import Board from "./Board";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { MapPinIcon } from "lucide-react";
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -30,7 +31,9 @@ export default function Game() {
     return (
       <li key={move}>
         {move === currentMove ? (
-          "You are at move #" + move
+          <div className="flex gap-2 items-center">
+            <MapPinIcon className="w-4 h-4" /> #{move}
+          </div>
         ) : (
           <Button
             className={cn(move === 0 ? "font-semibold" : "")}
@@ -45,11 +48,11 @@ export default function Game() {
   });
 
   return (
-    <div className="w-full max-w-[600px] flex flex-col sm:flex-row justify-center gap-10 ">
+    <div className="w-full max-w-[600px] flex flex-col sm:flex-row justify-center gap-10 border shadow-md rounded-lg divide-y sm:divide-x">
       <div className="flex flex-col items-center p-4">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className=" p-4 grow">
+      <div className="p-4 grow">
         <ol className="grid grid-rows-5 grid-flow-col gap-2">
           {movesAscending ? moves : moves.reverse()}
         </ol>
