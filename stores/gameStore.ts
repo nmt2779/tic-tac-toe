@@ -1,13 +1,13 @@
 import { Move } from "@/types/Move";
 import { createStore } from "zustand/vanilla";
 
-export type GameState = { 
+type GameState = { 
   history: Move[];
   currentMove: number;
   movesAscending: boolean;
 }
 
-export type GameActions = { 
+type GameActions = { 
   setHistory: (history: Move[]) => void;
   setCurrentMove: (currentMove: number) => void;
   setMovesAscending: (movesAscending: boolean) => void;
@@ -17,7 +17,7 @@ export type GameStore = GameState & GameActions;
 
 export const initGameStore = (): GameState => {
   return {
-    history: [{ squares: Array(9).fill(null), coordinates: { row: 0, col: 0 } }],
+    history: [{ squares: Array(9).fill(null)}],
     currentMove: 0,
     movesAscending: true,
   }
