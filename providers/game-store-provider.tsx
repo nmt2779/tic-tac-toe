@@ -1,4 +1,6 @@
-import { createGameStore, GameStore } from "@/stores/gameStore";
+"use client";
+
+import { createGameStore, GameStore, initGameStore } from "@/stores/gameStore";
 import { createContext, useContext, useRef } from "react";
 import { useStore } from "zustand";
 
@@ -16,7 +18,7 @@ export const GameStoreProvider = ({ children }: GameStoreProviderProps) => {
   const storeRef = useRef<GameStoreApi>(null);
 
   if (!storeRef.current) {
-    storeRef.current = createGameStore();
+    storeRef.current = createGameStore(initGameStore());
   }
 
   return (

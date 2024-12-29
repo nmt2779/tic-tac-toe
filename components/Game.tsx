@@ -5,29 +5,17 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { MapPinIcon } from "lucide-react";
 import { Move } from "@/types/Move";
-import { useGameStore } from "@/stores/gameStore";
+import { useGameStore } from "@/providers/game-store-provider";
 
 export default function Game() {
-  const [
+  const {
     history,
     setHistory,
     currentMove,
     setCurrentMove,
     movesAscending,
     setMovesAscending,
-  ] = useGameStore((state) => [
-    state.history,
-    state.setHistory,
-    state.currentMove,
-    state.setCurrentMove,
-    state.movesAscending,
-    state.setMovesAscending,
-  ]);
-  // const [history, setHistory] = useState<Move[]>([
-  //   { squares: Array(9).fill(null), coordinates: { row: 0, col: 0 } },
-  // ]);
-  // const [currentMove, setCurrentMove] = useState<number>(0);
-  // const [movesAscending, setMovesAscending] = useState<boolean>(true);
+  } = useGameStore((state) => state);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove].squares;
 
