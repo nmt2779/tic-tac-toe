@@ -1,1 +1,1 @@
-export type Coordinates = { row: number; col: number } | undefined;
+export type Coordinates = { row: number; col: number } ;
