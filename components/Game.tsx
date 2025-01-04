@@ -35,14 +35,14 @@ export default function Game() {
 
   const moves = history.map((move, index) => {
     const desc = index
-      ? `Go to move #${index} (${move.coordinates.row}, ${move.coordinates.col})`
+      ? `Go to move #${index} (${move.coordinates?.row}, ${move.coordinates?.col})`
       : `Go to game start`;
     return (
       <li key={index}>
         {index === currentMove && index !== 0 ? (
           <div className="flex gap-2 items-center">
-            <MapPinIcon className="w-4 h-4" />({move.coordinates.row},{" "}
-            {move.coordinates.col})
+            <MapPinIcon className="w-4 h-4" />({move.coordinates?.row},{" "}
+            {move.coordinates?.col})
           </div>
         ) : (
           <Button

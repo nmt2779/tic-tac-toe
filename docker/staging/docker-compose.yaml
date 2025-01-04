@@ -1,0 +1,8 @@
+services:
+  tic-tac-toe:
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: tic-tac-toe:1.0.0-staging
+    ports:
+      - "3001:3000"
