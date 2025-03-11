@@ -60,7 +60,7 @@ export default function Game() {
   return (
     <div
       className="w-full max-w-[700px] flex flex-col sm:flex-row
-     justify-center sm:justify-between border shadow-md rounded-lg"
+     justify-center sm:justify-between border border-gray-300 shadow-md rounded-xl bg-gray-100"
     >
       <div className="flex flex-col items-center justify-center p-6 ">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />

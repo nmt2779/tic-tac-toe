@@ -13,7 +13,7 @@ export default function Square({
     <button
       onClick={onSquareClick}
       className={cn(
-        isWinningSquare ? "bg-blue-200" : "",
+        isWinningSquare ? "bg-blue-200" : "bg-white",
         "text-2xl border border-gray-700 text-center w-16 h-16 mr-[-1px] mt-[-1px]"
       )}
     >
