@@ -48,7 +48,7 @@ export default function Game() {
           <Button
             className={cn(
               index === 0 ? "font-semibold" : "",
-              "w-full border border-gray-300"
+              "w-full border border-gray-300 text-base"
             )}
             variant={"outline"}
             onClick={() => jumpTo(index)}
