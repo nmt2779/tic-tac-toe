@@ -46,7 +46,10 @@ export default function Game() {
           </div>
         ) : (
           <Button
-            className={cn(index === 0 ? "font-semibold" : "", "w-full")}
+            className={cn(
+              index === 0 ? "font-semibold" : "",
+              "w-full border border-gray-300"
+            )}
             variant={"outline"}
             onClick={() => jumpTo(index)}
           >
@@ -62,7 +65,7 @@ export default function Game() {
       className="w-full max-w-[700px] lg:max-w-[900px] flex flex-col sm:flex-row
      justify-center sm:justify-between border border-gray-300 shadow-md rounded-2xl "
     >
-      <div className="flex flex-col items-center justify-center p-6 lg:p-12">
+      <div className="flex flex-col items-center justify-center p-6 lg:p-12 lg:px-20">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="px-2 lg:px-6 py-4 lg:py-10 grow border-t sm:border-t-0 sm:border-l border-gray-300 ">
@@ -71,7 +74,7 @@ export default function Game() {
         </ol>
         <Button
           onClick={toggleMovesOrder}
-          className="mt-6 sm:mt-6 w-full font-semibold"
+          className="mt-6 sm:mt-6 w-full font-bold text-base"
         >
           Sort by {movesAscending ? "Descending" : "Ascending"}
         </Button>
