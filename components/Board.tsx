@@ -38,7 +38,7 @@ export default function Board({
   return (
     <>
       <div className="text-2xl font-semibold">{status}</div>
-      <div className="flex flex-col mt-2 rounded-md">
+      <div className="flex flex-col mt-4 rounded-md">
         {Array(3)
           .fill(null)
           .map((_, row) => (
