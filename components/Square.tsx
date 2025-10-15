@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function Square({
   value,
@@ -26,15 +27,67 @@ export default function Square({
   };
 
   return (
-    <button
+    <motion.button
+      key={`${row}-${col}-${isWinningSquare}`}
       onClick={onSquareClick}
       className={cn(
-        isWinningSquare ? "bg-blue-500 text-white" : "bg-white",
-        "text-4xl font-semibold border border-gray-700 text-center w-24 h-24 mr-[-1px] mt-[-1px]",
+        "text-4xl font-semibold text-center w-24 h-24 mr-[-1px] mt-[-1px] overflow-hidden bg-white",
+        isWinningSquare
+          ? "border-4 border-blue-500 shadow-lg"
+          : "border border-gray-700",
         getCornerClasses()
       )}
+      whileHover={{
+        scale: value ? 1 : 1.05,
+        backgroundColor: value ? undefined : "#f9fafb",
+      }}
+      whileTap={{ scale: 0.95 }}
+      animate={
+        isWinningSquare
+          ? {
+              scale: [1, 1.05, 1],
+              borderColor: ["#3b82f6", "#1d4ed8", "#3b82f6"],
+            }
+          : {
+              scale: 1,
+            }
+      }
+      transition={{
+        duration: 0.2,
+        ease: [0.4, 0.0, 0.2, 1],
+      }}
     >
-      {value}
-    </button>
+      <AnimatePresence mode="wait">
+        {value && (
+          <motion.span
+            key={value}
+            initial={{
+              opacity: 0,
+              scale: 0,
+              rotate: -180,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0,
+              rotate: 180,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+              duration: 0.3,
+            }}
+            className="block text-gray-800 font-bold"
+          >
+            {value}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.button>
   );
 }
