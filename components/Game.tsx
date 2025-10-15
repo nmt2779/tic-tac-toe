@@ -1,20 +1,22 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { useGameStore } from "@/providers/game-store-provider";
+import { Move } from "@/types/Move";
+import { ChevronsDownIcon, ChevronsUpIcon, MapPinIcon } from "lucide-react";
 import Board from "./Board";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
-import { MapPinIcon } from "lucide-react";
-import { Move } from "@/types/Move";
-import { useGameStore } from "@/providers/game-store-provider";
 
 export default function Game() {
   const {
     history,
     setHistory,
     currentMove,
+    showHistory,
     setCurrentMove,
     movesAscending,
     setMovesAscending,
+    setShowHistory,
   } = useGameStore((state) => state);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove].squares;
@@ -35,8 +37,8 @@ export default function Game() {
 
   const moves = history.map((move, index) => {
     const desc = index
-      ? `Go to move #${index} (${move.coordinates?.row}, ${move.coordinates?.col})`
-      : `Go to game start`;
+      ? `Move #${index} (${move.coordinates?.row}, ${move.coordinates?.col})`
+      : `START`;
     return (
       <li key={index}>
         {index === currentMove && index !== 0 ? (
@@ -63,22 +65,34 @@ export default function Game() {
   return (
     <div
       className="w-full max-w-[700px] lg:max-w-[900px] flex flex-col sm:flex-row
-     justify-center sm:justify-between border border-gray-300 shadow-md rounded-2xl "
+     justify-center sm:justify-between"
     >
       <div className="flex flex-col items-center justify-center p-6 lg:p-12 lg:px-20">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="px-2 lg:px-6 py-4 lg:py-10 grow border-t sm:border-t-0 sm:border-l border-gray-300 ">
-        <ol className="w-full grid grid-rows-5 grid-cols-2 grid-flow-col gap-3 lg:gap-5">
-          {movesAscending ? moves : moves.reverse()}
-        </ol>
-        <Button
-          onClick={toggleMovesOrder}
-          className="mt-6 sm:mt-6 w-full font-bold text-base"
-        >
-          Sort by {movesAscending ? "Descending" : "Ascending"}
-        </Button>
-      </div>
+      <button
+        onClick={() => setShowHistory(!showHistory)}
+        className="border border-gray-200 rounded-full p-2 w-fit mx-auto"
+      >
+        {showHistory ? (
+          <ChevronsDownIcon className="w-8 h-8" />
+        ) : (
+          <ChevronsUpIcon className="w-8 h-8" />
+        )}
+      </button>
+      {showHistory && (
+        <div className="px-2 lg:px-6 py-4 lg:py-10 grow ">
+          <ol className="flex flex-wrap gap-2">
+            {movesAscending ? moves : moves.reverse()}
+          </ol>
+          <Button
+            onClick={toggleMovesOrder}
+            className="mt-6 sm:mt-6 w-full font-bold h-12 rounded-xl text-lg"
+          >
+            Sort by {movesAscending ? "Descending" : "Ascending"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

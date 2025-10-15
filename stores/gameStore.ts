@@ -1,39 +1,47 @@
 import { Move } from "@/types/Move";
 import { createStore } from "zustand/vanilla";
 
-type GameState = { 
+type GameState = {
   history: Move[];
   currentMove: number;
   movesAscending: boolean;
-}
+  showHistory: boolean;
+};
 
-type GameActions = { 
+type GameActions = {
   setHistory: (history: Move[]) => void;
   setCurrentMove: (currentMove: number) => void;
   setMovesAscending: (movesAscending: boolean) => void;
-}
+  setShowHistory: (showHistory: boolean) => void;
+};
 
 export type GameStore = GameState & GameActions;
 
 export const initGameStore = (): GameState => {
   return {
-    history: [{ squares: Array(9).fill(null)}],
+    history: [{ squares: Array(9).fill(null) }],
     currentMove: 0,
     movesAscending: true,
-  }
-}
+    showHistory: false,
+  };
+};
 
 export const defaultInitialState: GameState = {
   history: [{ squares: Array(9).fill(null), coordinates: { row: 0, col: 0 } }],
   currentMove: 0,
   movesAscending: true,
+  showHistory: false,
 };
 
 export const createGameStore = (initState: GameState = defaultInitialState) => {
   return createStore<GameStore>()((set) => ({
     ...initState,
     setHistory: (history: Move[]) => set((state) => ({ ...state, history })),
-    setCurrentMove: (currentMove: number) => set((state) => ({ ...state, currentMove })),
-    setMovesAscending: (movesAscending: boolean) => set((state) => ({ ...state, movesAscending })),
+    setCurrentMove: (currentMove: number) =>
+      set((state) => ({ ...state, currentMove })),
+    setMovesAscending: (movesAscending: boolean) =>
+      set((state) => ({ ...state, movesAscending })),
+    setShowHistory: (showHistory: boolean) =>
+      set((state) => ({ ...state, showHistory })),
   }));
-}
+};

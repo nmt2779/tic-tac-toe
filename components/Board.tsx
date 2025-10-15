@@ -37,8 +37,8 @@ export default function Board({
 
   return (
     <>
-      <div className="text-2xl lg:text-3xl font-bold">{status}</div>
-      <div className="flex flex-col mt-4 rounded-md">
+      <div className="text-4xl font-bold">{status}</div>
+      <div className="flex flex-col mt-10">
         {Array(3)
           .fill(null)
           .map((_, row) => (
@@ -53,6 +53,8 @@ export default function Board({
                       value={squares ? squares[index] : ""}
                       onSquareClick={() => handleClick({ row: row, col: col })}
                       isWinningSquare={result?.line.includes(index)}
+                      row={row}
+                      col={col}
                     />
                   );
                 })}
