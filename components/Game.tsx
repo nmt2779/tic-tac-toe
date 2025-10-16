@@ -26,7 +26,7 @@ export default function Game() {
 
   useEffect(() => {
     setHistoryVersion((prev) => prev + 1);
-  }, [history.length]);
+  }, [history.length, movesAscending]);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove].squares;
@@ -99,7 +99,7 @@ export default function Game() {
 
   return (
     <motion.div
-      className="w-full max-w-[700px] lg:max-w-[900px] flex flex-col sm:flex-row
+      className="w-full max-w-[700px] lg:max-w-[900px] flex flex-col 
      justify-center sm:justify-between"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </motion.div>
       <motion.div
-        className="flex justify-center my-4"
+        className="flex justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.2 }}
@@ -180,30 +180,37 @@ export default function Game() {
             }}
           >
             {(movesAscending ? moves : [...moves].reverse()).map(
-              (move, index) => (
-                <motion.div
-                  key={`${move.key}-${historyVersion}`}
-                  variants={{
-                    hidden: {
-                      opacity: 0,
-                      y: 20,
-                      scale: 0.8,
-                    },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                    },
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                  }}
-                >
-                  {move}
-                </motion.div>
-              )
+              (move, displayIndex) => {
+                // Extract original index from the move's li key
+                const originalIndex = move.key?.toString().split("-")[1]
+                  ? parseInt(move.key.toString().split("-")[1])
+                  : displayIndex;
+
+                return (
+                  <motion.div
+                    key={`move-${originalIndex}-${historyVersion}-${movesAscending}`}
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        y: 20,
+                        scale: 0.8,
+                      },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                      },
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20,
+                    }}
+                  >
+                    {move}
+                  </motion.div>
+                );
+              }
             )}
           </motion.ol>
           <motion.div
@@ -216,10 +223,11 @@ export default function Game() {
               duration: 0.3,
               delay: showHistory ? 0.4 : 0,
             }}
+            className="w-full  flex justify-center"
           >
             <Button
               onClick={toggleMovesOrder}
-              className="mt-6 sm:mt-6 w-full font-bold h-12 rounded-xl text-lg transition-all duration-200 hover:scale-105"
+              className="mt-6 sm:mt-6 w-full max-w-xs mx-auto font-bold h-12 rounded-xl text-lg transition-all duration-200 hover:scale-105"
             >
               Sort by {movesAscending ? "Descending" : "Ascending"}
             </Button>

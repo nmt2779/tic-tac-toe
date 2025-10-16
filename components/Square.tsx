@@ -38,14 +38,13 @@ export default function Square({
         getCornerClasses()
       )}
       whileHover={{
-        scale: value ? 1 : 1.05,
+        scale: 1.05,
         backgroundColor: value ? undefined : "#f9fafb",
       }}
       whileTap={{ scale: 0.95 }}
       animate={
         isWinningSquare
           ? {
-              scale: [1, 1.05, 1],
               borderColor: ["#3b82f6", "#1d4ed8", "#3b82f6"],
             }
           : {
