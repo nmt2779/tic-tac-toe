@@ -161,7 +161,7 @@ export default function Game() {
         >
           <motion.ol
             key={`history-list-${historyVersion}`}
-            className="flex flex-wrap gap-2"
+            className="grid grid-cols-2 gap-4"
             initial="hidden"
             animate={showHistory ? "visible" : "hidden"}
             variants={{
